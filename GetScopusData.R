@@ -16,12 +16,15 @@ source("FunctionsScopusApi.R")
 #query_string = "ISSN(0098-5589)"
 #my_filename = "TSE_All"
 
+set_api_key("cbf4132ececcb84b58a2aa5244ba7ce7")
+
 #For example
 #Finds 321 papers (29 April 2018). Suitable for classroom demo
-query_string = "Continuous Integration"
-my_filename = "ci"
+#query_string = "Defect Prediction"
+#my_filename = "defect"
 
-
+query_string = "botnet"
+my_filename = "botnet-sco"
 
 #later you may want to make this function. 
 #for learning it is better to excute in line by line fashion
@@ -30,7 +33,8 @@ my_filename = "ci"
   my_query_string = "TITLE-ABS-KEY(\""
   my_query_string = paste(my_query_string, query_string, sep="")
   #EDIT this line
-  my_query_string = paste(my_query_string, "\") AND ALL('software testing')", sep="")
+#  my_query_string = paste(my_query_string, "\") AND ALL('software testing')", sep="")
+  my_query_string = paste(my_query_string, "\") AND ALL('software')", sep="")
   
   #Get articles and save those - we do not want to re-run the query
   my_articles = get_scopus_papers(my_query_string)
@@ -43,8 +47,8 @@ my_filename = "ci"
 
   #Remove copyright sign.
   abstract = my_articles$Abstract
-  abstract = gsub("Copyright ©+[^.]*[.]","",abstract)
-  abstract = gsub("©+[^.]*[.]","",abstract) # Depdenging on the enviroment or data you might need something different* 
+  abstract = gsub("Copyright ?+[^.]*[.]","",abstract)
+  abstract = gsub("?+[^.]*[.]","",abstract) # Depdenging on the enviroment or data you might need something different* 
   abstract = gsub("All rights reserved[.]","",abstract)
   abstract = gsub("All right reserved[.]","",abstract)
   abstract = gsub("No abstract available[.]","",abstract)
@@ -77,6 +81,6 @@ my_filename = "ci"
   my_file = paste(my_file, "_data.RData", sep="", collapse=" ")
 
   save(my_articles, file=my_file)
-    
+# my_articles ->  my_articles_SC
 #  return(my_file)
 #}
